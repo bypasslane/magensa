@@ -19,18 +19,22 @@ module Magensa
       encrypted_data = encrypted_data[:track] ? self.class.parse(encrypted_data[:track]) : self.class.validate_data(encrypted_data)
       
       if mock?
-        response = {
-          decrypt_rsv201_response: {
-            decrypt_rsv201_result: {
-              track2: "FAKETRACK2",
-              pan: "FAKEPAN"
-            }
-          }
-        }
+        response = mock_response
       else
         response = client.transmit(DECRYPT_ACTION, request_body(encrypted_data)).to_hash
       end
       response_hash(response, encrypted_data)
+    end
+
+    def mock_response
+      {
+        decrypt_rsv201_response: {
+          decrypt_rsv201_result: {
+            track2: "FAKETRACK2",
+            pan: "FAKEPAN"
+          }
+        }
+      }
     end
 
     def client

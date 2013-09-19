@@ -28,7 +28,7 @@ describe Magensa::Decrypter do
 
   describe "decrypting" do
     before(:all) do
-      @client = Magensa::Decrypter.new("username", "password", {mock: true})
+      @decrypter = Magensa::Decrypter.new("username", "password", {mock: true})
       @valid_params = {
         name: "Steve Jones",
         track: VALID_ENCRYPTION_STRING,
@@ -37,7 +37,7 @@ describe Magensa::Decrypter do
     end
 
     it "should accept a string track" do
-      response = @client.decrypt(@valid_params)
+      response = @decrypter.decrypt(@valid_params)
       good_response_hash = {
         number: "FAKEPAN",
         month: "12",
@@ -49,7 +49,7 @@ describe Magensa::Decrypter do
     end
 
     it "should accept a hash with tracks" do
-      response = @client.decrypt({
+      response = @decrypter.decrypt({
           name: "Jones/Steve",
           track1: "QWERTY",
           expiration: "2001",
@@ -72,7 +72,7 @@ describe Magensa::Decrypter do
 
     it "should return a well formatted hash" do
       
-      response = @client.decrypt(@valid_params)
+      response = @decrypter.decrypt(@valid_params)
       good_response_hash = {
         number: "FAKEPAN",
         month: "12",
@@ -81,6 +81,22 @@ describe Magensa::Decrypter do
         last_name: "LastName"
       }
       response.should eql(good_response_hash)
+    end
+
+    it "should return a track2 pan if the pan is nil" do
+      
+
+      @decrypter.should_receive(:mock_response).and_return({
+        decrypt_rsv201_response: {
+          decrypt_rsv201_result: {
+            track2: ";123456789101112=asdgsfdg",
+            pan: nil
+          }
+        }
+      })
+
+      response = @decrypter.decrypt(@valid_params)
+      response[:number].should eql("123456789101112")
     end
   end
 end
