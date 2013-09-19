@@ -1,3 +1,5 @@
+require 'savon'
+
 module Magensa
   NAMESPACE = "http://www.magensa.net/"
 
@@ -10,10 +12,6 @@ module Magensa
 
     def production?
       options[:production] == true || options[:production] == nil
-    end
-
-    def mock?
-      options[:mock] == true
     end
 
     def client
@@ -33,38 +31,40 @@ module Magensa
         }
       end
 
-      @client = Savon.client({
+      client_options = {
         raise_errors: false,
-        logger: options[:logger],
         log_level: :debug,
         log: true,
         element_form_default: :unqualified,
-
         namespace_identifier: nil,
-        endpoint: url,
+        endpoint: endpoint,
         namespace: NAMESPACE,
         env_namespace: :soap,
-
         read_timeout: 360,
         open_timeout: 360
-      }.merge(ssl_info))
+      }
+
+      client_options[:logger] = options[:logger] if options[:logger]
+
+      @client = Savon.client(client_options.merge(ssl_info))
     end
-  end
+  
 
-  def transmit(action, body)
-    response = client.call(action, soap_action: 'http://www.magensa.net/#{action}', message: body)
-  end
-
-  private
-    def url
-      production? ? "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201" : "https://ws.magensa.net/WSmagensatest/service.asmx?op=DecryptRSV201"
+    def transmit(action, body)
+      response = client.call(action, soap_action: 'http://www.magensa.net/#{action}', message: body)
     end
 
-    def ssl_cert
+    private
+      def endpoint
+        production? ? "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201" : "https://ws.magensa.net/WSmagensatest/service.asmx?op=DecryptRSV201"
+      end
+
+      def ssl_cert
         {
           ca_file: ENV["MAGENSA_CA_FILE"],
           key_file: ENV["MAGENSA_KEY_FILE"],
           file: ENV["MAGENSA_CERT_FILE"]
         }
       end
+  end
 end

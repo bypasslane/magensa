@@ -33,17 +33,6 @@ module Magensa
       response_hash(response, encrypted_data)
     end
 
-    def response_hash(response, encrypted_data)
-      response = response[:decrypt_rsv201_response][:decrypt_rsv201_result]
-      output = {}
-      output[:number] = response[:pan] || track2_pan(response[:track2])
-      output[:month] = encrypted_data[:month]
-      output[:year] = encrypted_data[:year]
-      output[:first_name] = encrypted_data[:first_name]
-      output[:last_name] = encrypted_data[:last_name]
-      output
-    end
-
     def client
       @client ||= Client.new({
         logger: options[:logger],
@@ -90,6 +79,17 @@ module Magensa
         track2.match(/^;(\d+)=/)[1]
       rescue
         nil
+      end
+
+      def response_hash(response, encrypted_data)
+        response = response[:decrypt_rsv201_response][:decrypt_rsv201_result]
+        output = {}
+        output[:number] = response[:pan] || track2_pan(response[:track2])
+        output[:month] = encrypted_data[:month]
+        output[:year] = encrypted_data[:year]
+        output[:first_name] = encrypted_data[:first_name]
+        output[:last_name] = encrypted_data[:last_name]
+        output
       end
 
       def request_body(encrypted_data)
