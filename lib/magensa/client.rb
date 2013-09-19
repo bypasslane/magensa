@@ -52,11 +52,7 @@ module Magensa
   end
 
   def transmit(action, body)
-    if mock?
-      response = client.call(action, soap_action: 'http://www.magensa.net/#{action}', message: body)
-      response.to_hash[:decrypt_rsv201_response][:decrypt_rsv201_result]
-    else
-    end
+    response = client.call(action, soap_action: 'http://www.magensa.net/#{action}', message: body)
   end
 
   private

@@ -2,22 +2,45 @@ module Magensa
   DECRYPT_ACTION = "DecryptRSV201"
 
   class Decrypter
-    attr_accessor :options, :encrypted_data
+    attr_accessor :options
 
-    def initialize(username, password, options)
+    def initialize(username, password, options = {})
       @hostID = username
       @hostPwd = password
       self.options = options
     end
 
-    def decrypt(encrypted_data)
-      if encrypted_data[:track]
-        @encrypted_data = self.class.parse(encrypted_data[:track])
-      else
-        @encrypted_data = self.class.validate_data(encrypted_data)
-      end
+    def mock?
+      options[:mock] == true
+    end
 
-      client.transmit(DECRYPT_ACTION, request_body)
+    def decrypt(encrypted_data)
+      encrypted_data = encrypted_data[:track] ? self.class.parse(encrypted_data[:track]) : self.class.validate_data(encrypted_data)
+      
+      if mock?
+        response = {
+          decrypt_rsv201_response: {
+            decrypt_rsv201_result: {
+              track2: "FAKETRACK2",
+              pan: "FAKEPAN"
+            }
+          }
+        }
+      else
+        response = client.transmit(DECRYPT_ACTION, request_body(encrypted_data)).to_hash
+      end
+      response_hash(response)
+    end
+
+    def response_hash(response, encrypted_data)
+      response = response[:decrypt_rsv201_response][:decrypt_rsv201_result]
+      output = {}
+      output[:number] = response[:pan] || track2_pan(response[:track2])
+      output[:month] = encrypted_data[:month]
+      output[:year] = encrypted_data[:year]
+      output[:first_name] = encrypted_data[:first_name]
+      output[:last_name] = encrypted_data[:last_name]
+      output
     end
 
     def client
@@ -61,23 +84,23 @@ module Magensa
     end
 
     private
-    
+
       def track2_pan(track2)
         track2.match(/^;(\d+)=/)[1]
       rescue
         nil
       end
 
-      def request_body
+      def request_body(encrypted_data)
         {
           "DecryptRSV201_Input" => {
-            "EncTrack2" => @encrypted_data[:track2],
-            "EncTrack1" => @encrypted_data[:track1],
-            "EncTrack3" => @encrypted_data[:track3],
-            "EncMP" => @encrypted_data[:mp],
-            "KSN" => @encrypted_data[:ksn],
-            "DeviceSN" => @encrypted_data[:device_sn],
-            "MPStatus" => @encrypted_data[:mpstatus],
+            "EncTrack2" => encrypted_data[:track2],
+            "EncTrack1" => encrypted_data[:track1],
+            "EncTrack3" => encrypted_data[:track3],
+            "EncMP" => encrypted_data[:mp],
+            "KSN" => encrypted_data[:ksn],
+            "DeviceSN" => encrypted_data[:device_sn],
+            "MPStatus" => encrypted_data[:mpstatus],
             "CustTranID" => options[:ref_id],
             "HostID" => @hostID,
             "HostPwd" => @hostPwd,
