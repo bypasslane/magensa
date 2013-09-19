@@ -15,6 +15,7 @@ module Magensa
     end
 
     def decrypt(encrypted_data)
+
       encrypted_data = encrypted_data[:track] ? self.class.parse(encrypted_data[:track]) : self.class.validate_data(encrypted_data)
       
       if mock?
@@ -29,7 +30,7 @@ module Magensa
       else
         response = client.transmit(DECRYPT_ACTION, request_body(encrypted_data)).to_hash
       end
-      response_hash(response)
+      response_hash(response, encrypted_data)
     end
 
     def response_hash(response, encrypted_data)
