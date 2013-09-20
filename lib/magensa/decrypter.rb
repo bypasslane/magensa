@@ -1,6 +1,12 @@
 module Magensa
   DECRYPT_ACTION = "DecryptRSV201"
 
+  TRACK2_INDEX = 3
+  MP_INDEX = 6
+  MPSTATUS_INDEX = 5
+  DEVICESN_INDEX = 7
+  KSN_INDEX = 9
+
   class Decrypter
     attr_accessor :options
 
@@ -55,29 +61,39 @@ module Magensa
     end
 
     def self.parse(encrypted_string)
-      data = {}
       parse_array = encrypted_string.split('|')
-      data[:track2] = parse_array[3]
-      data[:mpstatus] = parse_array[5]
-      data[:mp] = parse_array[6]
-      data[:device_sn] = parse_array[7]
-      data[:ksn] = parse_array[9]
+      data = {
+        track2: parse_array[TRACK2_INDEX],
+        mpstatus: parse_array[MPSTATUS_INDEX],
+        mp: parse_array[MP_INDEX],
+        device_sn: parse_array[DEVICESN_INDEX],
+        ksn: parse_array[KSN_INDEX]
+      }
 
-      split = encrypted_string.slice(2, encrypted_string.length-2).split("^")
-      data[:brand_identifier] = split[0] if split[0]
-      data[:last_four_digits] = split[0].slice(-4, 4) if split[0]
-      if split[1]
-        data[:first_name] = split[1].split("/").last
-        data[:last_name] = split[1].split("/").first
-      end
-      if split[2]
-        data[:month] = split[2].slice(2,2)
-        data[:year] = split[2].slice(0,2)
-      end
-      data
+      self.add_unencrypted(data, encrypted_string)
     end
 
     private
+
+      # parse encrypted_string for the unencrypted fields and adds to data
+      def self.add_unencrypted(data, encrypted_string)
+        split = encrypted_string.slice(2, encrypted_string.length-2).split("^")
+        if split[0]
+          data[:brand_identifier] = split[0]
+          data[:last_four_digits] = split[0].slice(-4, 4)
+        end
+
+        if split[1]
+          data[:first_name] = split[1].split("/").last
+          data[:last_name] = split[1].split("/").first
+        end
+
+        if split[2]
+          data[:month] = split[2].slice(2,2)
+          data[:year] = split[2].slice(0,2)
+        end
+        data
+      end
 
       def track2_pan(track2)
         track2.match(/^;(\d+)=/)[1]
