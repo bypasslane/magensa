@@ -63,11 +63,11 @@ module Magensa
     def self.parse(encrypted_string)
       parse_array = encrypted_string.split('|')
       data = {
-        track2: parse_array[TRACK2_INDEX],
-        mpstatus: parse_array[MPSTATUS_INDEX],
-        mp: parse_array[MP_INDEX],
+        track2:    parse_array[TRACK2_INDEX],
+        mpstatus:  parse_array[MPSTATUS_INDEX],
+        mp:        parse_array[MP_INDEX],
         device_sn: parse_array[DEVICESN_INDEX],
-        ksn: parse_array[KSN_INDEX]
+        ksn:       parse_array[KSN_INDEX]
       }
 
       self.add_unencrypted(data, encrypted_string)
