@@ -102,7 +102,7 @@ module Magensa
       end
 
       def response_hash(response, encrypted_data)
-        response = response[:decrypt_rsv201_response][:decrypt_rsv201_result]
+        response = response.to_hash[:decrypt_rsv201_response][:decrypt_rsv201_result]
         output = {}
         output[:number] = response[:pan] || track2_pan(response[:track2])
         output[:month] = encrypted_data[:month]
