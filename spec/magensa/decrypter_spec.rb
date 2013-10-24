@@ -21,7 +21,7 @@ describe Magensa::Decrypter do
   describe "setting up the client" do
     it "should create a new Client with default values" do
       decrypter = Magensa::Decrypter.new("username", "password")
-      Magensa::Client.should_receive(:new).with({logger: nil, production: true, mock: false})
+      Magensa::Client.should_receive(:new).with({logger: nil, production: false, mock: false})
       decrypter.client
     end
   end
