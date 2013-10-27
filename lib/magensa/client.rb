@@ -23,7 +23,8 @@ module Magensa
           ssl_cert_file: ssl_cert[:file],
           ssl_cert_key_file: ssl_cert[:key_file],
           ssl_ca_cert_file: ssl_cert[:ca_file],
-          ssl_verify_mode: :peer
+          ssl_verify_mode: :peer,
+          ssl_version: :SSLv3
         }
       else
         ssl_info = {
