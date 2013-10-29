@@ -15,7 +15,6 @@ module Magensa
     end
 
     def client
-      return @client if @client
 
       ssl_info = {}
       if production?
