@@ -18,18 +18,18 @@ module Magensa
       return @client if @client
 
       ssl_info = {}
-      if production?
+      #if production?
         ssl_info = {
           ssl_cert_file: ssl_cert[:file],
           ssl_cert_key_file: ssl_cert[:key_file],
           ssl_ca_cert_file: ssl_cert[:ca_file],
           ssl_verify_mode: :peer
         }
-      else
-        ssl_info = {
-          ssl_verify_mode: :none
-        }
-      end
+      #else
+        #ssl_info = {
+        #  ssl_verify_mode: :none
+        #}
+      #end
 
       client_options = {
         raise_errors: false,
