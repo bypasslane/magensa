@@ -20,6 +20,11 @@ describe Magensa::Client do
       client.production?.should be(true)
     end
 
+    it "should receive a default production state" do
+      client = Magensa::Client.new(production: true)
+      client.production?.should be(true)
+    end
+
     it "should set ssl options if production" do
       magensa = Magensa::Client.new(production: true, mock: true)
       magensa.should_receive(:ssl_cert).exactly(3).times.and_return({:key_file => "/var/www/bypass/production/shared/magensa.key", :file => "/var/www/bypass/production/shared/magensa.cert"})

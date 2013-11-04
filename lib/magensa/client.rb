@@ -17,7 +17,7 @@ module Magensa
     def client
 
       ssl_info = {}
-      #if production?
+      if production?
         ssl_info = {
           ssl_cert_file: ssl_cert[:file],
           ssl_cert_key_file: ssl_cert[:key_file],
@@ -25,11 +25,11 @@ module Magensa
           ssl_verify_mode: :peer,
           ssl_version: :SSLv3
         }
-      #else
-        #ssl_info = {
-        #  ssl_verify_mode: :none
-        #}
-      #end
+      else
+        ssl_info = {
+          ssl_verify_mode: :none
+        }
+      end
 
       client_options = {
         raise_errors: false,

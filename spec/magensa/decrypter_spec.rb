@@ -24,6 +24,12 @@ describe Magensa::Decrypter do
       Magensa::Client.should_receive(:new).with({logger: nil, production: false, mock: false})
       decrypter.client
     end
+
+    it "should pass production true to the client if options production is true" do
+      decrypter = Magensa::Decrypter.new("username", "password", {production: true})
+      Magensa::Client.should_receive(:new).with({logger: nil, production: true, mock: false})
+      decrypter.client
+    end
   end
 
   describe "decrypting" do
