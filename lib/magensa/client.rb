@@ -33,7 +33,7 @@ module Magensa
 
       client_options = {
         raise_errors: false,
-        log_level: :debug,
+        log_level: production? ? :error : :debug,
         log: true,
         element_form_default: :unqualified,
         namespace_identifier: nil,

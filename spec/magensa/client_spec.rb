@@ -30,5 +30,27 @@ describe Magensa::Client do
       magensa.should_receive(:ssl_cert).exactly(3).times.and_return({:key_file => "/var/www/bypass/production/shared/magensa.key", :file => "/var/www/bypass/production/shared/magensa.cert"})
       magensa.client
     end
+
+    it "should set logger to error if production" do
+      magensa = Magensa::Client.new(production: true, mock: true)
+      Savon.should_receive(:client).with({
+        raise_errors: false,
+        log_level: :error,
+        log: true,
+        element_form_default: :unqualified,
+        namespace_identifier: nil,
+        endpoint: "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201",
+        namespace: "http://www.magensa.net/",
+        env_namespace: :soap,
+        read_timeout: 360,
+        open_timeout: 360,
+        ssl_cert_file: nil,
+        ssl_cert_key_file: nil,
+        ssl_ca_cert_file: nil,
+        ssl_verify_mode: :peer,
+        ssl_version: :SSLv3
+      }).and_return(nil)
+      magensa.client
+    end
   end
 end
