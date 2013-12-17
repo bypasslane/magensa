@@ -19,10 +19,10 @@ module Magensa
       ssl_info = {}
       if production?
         ssl_info = {
-          ssl_cert_file: ssl_cert[:file],
           ssl_cert_key_file: ssl_cert[:key_file],
-          ssl_ca_cert_file: ssl_cert[:ca_file],
-          ssl_verify_mode: :peer,
+          ssl_cert_key_password: ssl_cert[:key_password],
+          ssl_cert_file: ssl_cert[:cert_file],
+          ssl_verify_mode: :none,
           ssl_version: :SSLv3
         }
       else
@@ -64,7 +64,8 @@ module Magensa
         {
           ca_file: ENV["MAGENSA_CA_FILE"],
           key_file: ENV["MAGENSA_KEY_FILE"],
-          file: ENV["MAGENSA_CERT_FILE"]
+          key_password: ENV["MAGENSA_KEY_PASSWORD"],
+          cert_file: ENV["MAGENSA_CERT_FILE"]
         }
       end
   end
