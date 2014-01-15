@@ -47,7 +47,8 @@ module Magensa
       @client ||= Client.new({
         logger: options[:logger],
         production: options[:production] || false,
-        mock: options[:mock] || false
+        mock: options[:mock] || false,
+        log_level: options[:log_level]
       })
     end
 
