@@ -51,7 +51,8 @@ module Magensa
   
 
     def transmit(action, body)
-      response = client.call(action, soap_action: "http://www.magensa.net/#{action}", message: body)
+      soap_action = "http://www.magensa.net/#{action}"
+      response = client.call(action, soap_action: soap_action, message: body)
     end
 
     private
