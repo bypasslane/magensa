@@ -56,8 +56,10 @@ module Magensa
       data = encrypted_hash
       data[:first_name] = data[:name].split("/").last
       data[:last_name] = data[:name].split("/").first
-      data[:month] = data[:expiration].slice(2,2)
-      data[:year] = data[:expiration].slice(0,2)
+      if data[:expiration]
+        data[:month] = data[:expiration].slice(2,2)
+        data[:year] = data[:expiration].slice(0,2)
+      end
       data
     end
 
