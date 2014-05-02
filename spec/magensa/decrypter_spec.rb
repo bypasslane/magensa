@@ -46,6 +46,7 @@ describe Magensa::Decrypter do
       response = @decrypter.decrypt(@valid_params)
       good_response_hash = {
         number: "FAKEPAN",
+        track2: "FAKETRACK2",
         month: "12",
         year: "13",
         first_name: "FirstName",
@@ -68,6 +69,7 @@ describe Magensa::Decrypter do
         })
       good_response_hash = {
         number: "FAKEPAN",
+        track2: "FAKETRACK2",
         month: "01",
         year: "20",
         first_name: "Steve",
@@ -84,6 +86,7 @@ describe Magensa::Decrypter do
         month: "12",
         year: "13",
         first_name: "FirstName",
+        track2: "FAKETRACK2",
         last_name: "LastName"
       }
       response.should eql(good_response_hash)
