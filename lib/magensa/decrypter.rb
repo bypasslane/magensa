@@ -37,7 +37,7 @@ module Magensa
         decrypt_rsv201_response: {
           decrypt_rsv201_result: {
             track2: "FAKETRACK2",
-            pan: "FAKEPAN"
+            pan: "4111111111111111"
           }
         }
       }

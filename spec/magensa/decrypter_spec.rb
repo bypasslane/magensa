@@ -45,7 +45,7 @@ describe Magensa::Decrypter do
     it "should accept a string track" do
       response = @decrypter.decrypt(@valid_params)
       good_response_hash = {
-        number: "FAKEPAN",
+        number: "4111111111111111",
         track2: "FAKETRACK2",
         month: "12",
         year: "13",
@@ -68,7 +68,7 @@ describe Magensa::Decrypter do
           device_sn: "1234446"
         })
       good_response_hash = {
-        number: "FAKEPAN",
+        number: "4111111111111111",
         track2: "FAKETRACK2",
         month: "01",
         year: "20",
@@ -82,7 +82,7 @@ describe Magensa::Decrypter do
       
       response = @decrypter.decrypt(@valid_params)
       good_response_hash = {
-        number: "FAKEPAN",
+        number: "4111111111111111",
         month: "12",
         year: "13",
         first_name: "FirstName",
