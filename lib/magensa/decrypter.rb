@@ -56,10 +56,7 @@ module Magensa
       data = encrypted_hash
       data[:first_name] = data[:name].split("/").last
       data[:last_name] = data[:name].split("/").first
-      if data[:expiration]
-        data[:month] = data[:expiration].slice(2,2)
-        data[:year] = data[:expiration].slice(0,2)
-      end
+      data[:month], data[:year] = split_date(data[:expiration])
       data
     end
 
@@ -77,7 +74,6 @@ module Magensa
     end
 
     private
-
       # parse encrypted_string for the unencrypted fields and adds to data
       def self.add_unencrypted(data, encrypted_string)
         split = encrypted_string.slice(2, encrypted_string.length-2).split("^")
@@ -91,11 +87,17 @@ module Magensa
           data[:last_name] = split[1].split("/").first
         end
 
-        if split[2]
-          data[:month] = split[2].slice(2,2)
-          data[:year] = split[2].slice(0,2)
-        end
+        data[:month], data[:year] = split_date(split[2])
+
         data
+      end
+
+      #returns month, year
+      def self.split_date(split)
+        if split
+          return split.slice(2,2), split.slice(0,2)
+        end
+        return nil, nil
       end
 
       def track2_pan(track2)
