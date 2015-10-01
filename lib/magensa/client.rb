@@ -23,7 +23,7 @@ module Magensa
           ssl_cert_key_file: ssl_cert[:key_file],
           ssl_ca_cert_file: ssl_cert[:ca_file],
           ssl_verify_mode: :peer,
-          ssl_version: :TLSv1
+          ssl_version: :TLSv1_2
         }
       else
         ssl_info = {
@@ -48,7 +48,7 @@ module Magensa
 
       @client = Savon.client(client_options.merge(ssl_info))
     end
-  
+
 
     def transmit(action, body)
       soap_action = "http://www.magensa.net/#{action}"
