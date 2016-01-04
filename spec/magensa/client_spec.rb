@@ -47,8 +47,7 @@ describe Magensa::Client do
         ssl_cert_file: nil,
         ssl_cert_key_file: nil,
         ssl_ca_cert_file: nil,
-        ssl_verify_mode: :peer,
-        ssl_version: :SSLv3
+        ssl_verify_mode: :peer
       }).and_return(nil)
       magensa.client
     end
@@ -69,8 +68,7 @@ describe Magensa::Client do
         ssl_cert_file: nil,
         ssl_cert_key_file: nil,
         ssl_ca_cert_file: nil,
-        ssl_verify_mode: :peer,
-        ssl_version: :SSLv3
+        ssl_verify_mode: :peer
       }).and_return(nil)
       magensa.client
     end
