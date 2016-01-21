@@ -62,7 +62,7 @@ describe Magensa::Client do
         namespace_identifier: nil,
         endpoint: "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201",
         namespace: "http://www.magensa.net/",
-        env_namespace: :soap,                                       ''
+        env_namespace: :soap,
         read_timeout: 360,
         open_timeout: 360,
         ssl_cert_file: nil,
