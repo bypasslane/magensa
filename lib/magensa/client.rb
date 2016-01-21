@@ -56,7 +56,8 @@ module Magensa
 
     private
       def endpoint
-        production? ? "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201" : "https://ws.magensa.net/WSmagensatest/service.asmx?op=DecryptRSV201"
+        ENV['MAGENSA_ENDPOINT'] ||
+          (production? ? "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201" : "https://ws.magensa.net/WSmagensatest/service.asmx?op=DecryptRSV201")
       end
 
       def ssl_cert
