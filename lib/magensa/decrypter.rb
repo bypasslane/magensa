@@ -48,7 +48,8 @@ module Magensa
         logger: options[:logger],
         production: options[:production] || false,
         mock: options[:mock] || false,
-        log_level: options[:log_level]
+        log_level: options[:log_level],
+        endpoint: options[:endpoint]
       })
     end
 

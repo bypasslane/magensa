@@ -21,13 +21,13 @@ describe Magensa::Decrypter do
   describe "setting up the client" do
     it "should create a new Client with default values" do
       decrypter = Magensa::Decrypter.new("username", "password")
-      Magensa::Client.should_receive(:new).with({logger: nil, production: false, mock: false, log_level: nil})
+      Magensa::Client.should_receive(:new).with({logger: nil, production: false, mock: false, log_level: nil, endpoint: nil})
       decrypter.client
     end
 
     it "should pass production true to the client if options production is true" do
       decrypter = Magensa::Decrypter.new("username", "password", {production: true})
-      Magensa::Client.should_receive(:new).with({logger: nil, production: true, mock: false, log_level: nil})
+      Magensa::Client.should_receive(:new).with({logger: nil, production: true, mock: false, log_level: nil, endpoint: nil})
       decrypter.client
     end
   end
@@ -46,7 +46,7 @@ describe Magensa::Decrypter do
       response = @decrypter.decrypt(@valid_params)
       good_response_hash = {
         number: "4111111111111111",
-        track2: ";4111111111111111=0125?",
+        track2: ";4111111111111111=20051010000000157?",
         month: "12",
         year: "13",
         first_name: "FirstName",
@@ -69,7 +69,7 @@ describe Magensa::Decrypter do
         })
       good_response_hash = {
         number: "4111111111111111",
-        track2: ";4111111111111111=0125?",
+        track2: ";4111111111111111=20051010000000157?",
         month: "01",
         year: "20",
         first_name: "Steve",
@@ -86,7 +86,7 @@ describe Magensa::Decrypter do
         month: "12",
         year: "13",
         first_name: "FirstName",
-        track2: ";4111111111111111=0125?",
+        track2: ";4111111111111111=20051010000000157?",
         last_name: "LastName"
       }
       response.should eql(good_response_hash)

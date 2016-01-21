@@ -72,5 +72,26 @@ describe Magensa::Client do
       }).and_return(nil)
       magensa.client
     end
+
+    it "should set the endpoint if passed in" do
+      magensa = Magensa::Client.new(production: true, mock: true, log_level: :herro, endpoint: 'http://magensarules.com')
+      Savon.should_receive(:client).with({
+        raise_errors: false,
+        log_level: :herro,
+        log: true,
+        element_form_default: :unqualified,
+        namespace_identifier: nil,
+        endpoint: "http://magensarules.com",
+        namespace: "http://www.magensa.net/",
+        env_namespace: :soap,
+        read_timeout: 360,
+        open_timeout: 360,
+        ssl_cert_file: nil,
+        ssl_cert_key_file: nil,
+        ssl_ca_cert_file: nil,
+        ssl_verify_mode: :peer
+      }).and_return(nil)
+      magensa.client
+    end
   end
 end
