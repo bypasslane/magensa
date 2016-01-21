@@ -56,7 +56,7 @@ module Magensa
 
     private
       def endpoint
-        options[:endpoint] ||
+        ENV['MAGENSA_ENDPOINT'] ||
           (production? ? "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201" : "https://ws.magensa.net/WSmagensatest/service.asmx?op=DecryptRSV201")
       end
 

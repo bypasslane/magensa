@@ -62,7 +62,7 @@ describe Magensa::Client do
         namespace_identifier: nil,
         endpoint: "https://Ns.magensa.net/WSmagensa/service.asmx?op=DecryptRSV201",
         namespace: "http://www.magensa.net/",
-        env_namespace: :soap,
+        env_namespace: :soap,                                       ''
         read_timeout: 360,
         open_timeout: 360,
         ssl_cert_file: nil,
@@ -74,7 +74,8 @@ describe Magensa::Client do
     end
 
     it "should set the endpoint if passed in" do
-      magensa = Magensa::Client.new(production: true, mock: true, log_level: :herro, endpoint: 'http://magensarules.com')
+      ENV['MAGENSA_ENDPOINT'] = 'http://magensarules.com'
+      magensa = Magensa::Client.new(production: true, mock: true, log_level: :herro)
       Savon.should_receive(:client).with({
         raise_errors: false,
         log_level: :herro,
