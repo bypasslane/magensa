@@ -39,8 +39,8 @@ module Magensa
         endpoint: endpoint,
         namespace: NAMESPACE,
         env_namespace: :soap,
-        read_timeout: 360,
-        open_timeout: 360
+        read_timeout: 15,
+        open_timeout: 15
       }
 
       client_options[:logger] = options[:logger] if options[:logger]
