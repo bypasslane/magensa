@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+<s:Body>
+    <DecryptCardSwipeResponse xmlns="http://tempuri.org/">
+    <DecryptCardSwipeResult xmlns:a="http://schemas.datacontract.org/2004/07/Decrypt.Core" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <a:CustomerTransactionId>?</a:CustomerTransactionId>
+    <a:IsReplay>false</a:IsReplay>
+    <a:MagTranId>071262e6-b8e3-4939-b47a-f727f6eb33ce</a:MagTranId>
+    <a:CardID>BTLQGX/Hl4SkPjyLGLUuFgIz+4sagoL+ElaS2/YzD6U=</a:CardID>
+    <a:DecryptedCardSwipe>
+        <a:MagnePrint>02002AE0FC3904080DD2FCDDBD86C90C1D21008FB21833A24707BBAF0AF03770C01CA011FA39670354C1DDD96139BE18F0BB2C7B84DA0000</a:MagnePrint>
+        <a:Track1>%B99991234567891^STERLING/JOANNE^99121011445?</a:Track1>
+        <a:Track2>;9999991234567891=99121011445?</a:Track2>
+        <a:Track3>;019999991234567891=00101220100005095016020000005030001991210123456789?</a:Track3>
+    </a:DecryptedCardSwipe>
+    <a:MagnePrintScore>0.8874</a:MagnePrintScore>
+</DecryptCardSwipeResult>
+</DecryptCardSwipeResponse>
+</s:Body>
+</s:Envelope>

@@ -1,0 +1,8 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <s:Fault>
+      <faultcode>s:5000</faultcode>
+      <faultstring xml:lang="en-US">Unknown Error - MagTranID: 599d886f-ce1d-4f36-8395-d0639bb7248f</faultstring>
+    </s:Fault>
+  </s:Body>
+</s:Envelope>

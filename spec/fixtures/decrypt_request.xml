@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:dec="http://schemas.datacontract.org/2004/07/Decrypt.Core">
+<soapenv:Header/>
+<soapenv:Body>
+    <tem:DecryptCardSwipe>
+        <tem:request>
+            <dec:BillingLabel>?</dec:BillingLabel>
+            <dec:CustomerTransactionID>?</dec:CustomerTransactionID>
+            <dec:Authentication>
+                <dec:CustomerCode>9900000000000002</dec:CustomerCode>
+                <dec:Password>userpassword</dec:Password>
+                <dec:Username>username</dec:Username>
+            </dec:Authentication>
+            <dec:EncryptedCardSwipe>
+                <dec:DeviceSN>B28C0DC</dec:DeviceSN>
+                <dec:KSN>9010010B28C0DC00002C</dec:KSN>
+                <dec:MagnePrint>0E1B24FF8F300706FEF8430CD484D3F3406884D5D42119F303A9006F0760862CF4FAF62397FCF62669B091858FEC04B531EF0BEAA645003E</dec:MagnePrint>
+                <dec:MagnePrintStatus>3162209</dec:MagnePrintStatus>
+                <dec:Track1>44839C7D0F3F5294A48A53CDCF998AE30C446F9843CBED3420DCC070F683622962598B77FCF52A367E670DD7813A747E</dec:Track1>
+                <dec:Track2>58273F4F05D153CC8A21085C9D61E05E2D2F8103626A70BA636F804C85E8DD56</dec:Track2>
+                <dec:Track3>D04D1707D07664377FD0F0094B11E26CF4C1B1D670C3696E3F0C14C34EBD3EBE32C602DE684336BCEE8C08CC1BF22862995D9F355573CAEA5FAA97B03F2307E0679FFF294B114FE4</dec:Track3>
+            </dec:EncryptedCardSwipe>
+        </tem:request>
+    </tem:DecryptCardSwipe>
+</soapenv:Body>
+</soapenv:Envelope>
