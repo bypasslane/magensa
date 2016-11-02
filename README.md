@@ -1,6 +1,6 @@
 # Magensa
 
-TODO: Write a gem description
+A gem for talking to Magtek Magensa Decryption API
 
 ## Installation
 
@@ -18,7 +18,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You need to set the following ENV variables for the gem to function in production mode.
+
+ENV['MAGENSA2_ENDPOINT']  
+ENV['MAGENSA2_CA_FILE']  
+ENV['MAGENSA2_KEY_FILE']  
+ENV['MAGENSA2_CERT_FILE']
+
 
 ## Contributing
 

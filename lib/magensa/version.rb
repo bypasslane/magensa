@@ -1,3 +1,3 @@
 module Magensa
-  VERSION = "0.0.17"
+  VERSION = "2.0.0"
 end
