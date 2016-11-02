@@ -3,6 +3,17 @@ module Magensa
     DECRYPT_ACTION = 'DecryptCardSwipe'.freeze
     SOAP_ACTION    = 'http://tempuri.org/IDecrypt/DecryptCardSwipe'.freeze
 
+    # The Decrypter class is used to get decrypted data from an encrypted Magtek Swiper.
+    # ex: decrypter = Magensa::V2::Decrypter.new("username", "password", "cust-code") #
+    #  decrypter.decrypt({
+    #       device_sn: "1234567"
+    #       track2: "encrypted-track2"
+    #       ksn: "90110000"
+    #       mp_status: "12345678"
+    #       mp: "0000000000000000000000"
+    #  })
+    # => decrypter[:number]
+    # => "4111111111111111"
     class Decrypter
       attr_accessor :options
 
