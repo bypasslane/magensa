@@ -112,6 +112,7 @@ module Magensa
         def request_body(encrypted_data)
           {
             "tem:request" => {
+              "dec:CustomerTransactionID" => options[:ref_id],
               "dec:Authentication" => {
                   "dec:CustomerCode" => @customer_code,
                   "dec:Password" => @password,
