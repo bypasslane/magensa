@@ -19,24 +19,8 @@ describe Magensa::V2::Client do
 
   describe "options" do
 
-    it "should know its production state" do
-      client = Magensa::V2::Client.new
-
-      client.production?.should be(true)
-      client.options[:production] = false
-      client.production?.should be(false)
-      client.options[:production] = true
-      client.production?.should be(true)
-    end
-
-    it "should receive a default production state" do
-      client = Magensa::V2::Client.new(production: true)
-      client.production?.should be(true)
-    end
-
-    it "should set logger to log_level if provided" do
-      magensa = Magensa::V2::Client.new(production: true, mock: true, log_level: :herro)
-      Savon.should_receive(:client).with({
+    let(:proper_params){
+      {
         raise_errors: false,
         log_level: :herro,
         log: true,
@@ -55,8 +39,12 @@ describe Magensa::V2::Client do
         ssl_version: :TLSv1_2,
         adapter: :net_http
 
-      }).and_return(nil)
-      magensa.client
+      }
+    }
+    it "should set logger to log_level if provided" do
+      magensa = Magensa::V2::Client.new(production: true, mock: true, log_level: :herro)
+      Savon.should_receive(:client).with(proper_params).and_return(double(:client, call: true))
+      magensa.transmit("action", {})
     end
 
   end
@@ -65,7 +53,7 @@ describe Magensa::V2::Client do
     it "should format the request properly" do
       stub_request(:post, "https://decrypt.magensa.net/Decrypt.svc").to_return(body: fixture('decrypt_response.xml'))
       client = Magensa::V2::Client.new({log_level: :debug})
-      client.transmit("DecryptCardSwipe", {"tem:request" => {
+      resp = client.transmit("DecryptCardSwipe", {"tem:request" => {
                                             "dec:EncryptedCardSwipe" => {"dec:DeviceSN" => "12345"},
                                             "dec:Authentication"=>{
                                               "dec:Password" => 'password',
@@ -73,6 +61,8 @@ describe Magensa::V2::Client do
                                             }
                                           }
       })
+
+      expect(resp.to_hash.key?(:decrypt_card_swipe_response)).to be_true
     end
 
   end

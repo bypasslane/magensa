@@ -13,12 +13,9 @@ module Magensa
         self.options = options
       end
 
-      def mock?
-        options[:mock] == true
-      end
-
+      # @param [Hash] encrypted_data - card details
+      # @return [Hash] The decrypt results in a hash
       def decrypt(encrypted_data)
-
         encrypted_data = decode_data(encrypted_data)
 
         if mock?
@@ -29,38 +26,44 @@ module Magensa
         response_hash(response, encrypted_data)
       end
 
-      def mock_response
-        output = {}
-        output[:number] = '4111111111111111'
-        output[:track1] = "%B4111111111111111^STERLING/JOANNE^99121011445?"
-        output[:track2] = ';4111111111111111=20051010000000157?'
-        output[:month] = '05'
-        output[:year] = '20'
-        output[:first_name] = 'JOANNE'
-        output[:last_name] = 'STERLING'
-        output
-      end
-
-      def client
-        V2::Client.new({
-          logger: options[:logger],
-          production: options[:production] || false,
-          mock: options[:mock] || false,
-          log_level: options[:log_level]
-        })
-      end
-
-      def decode_data(encrypted_hash)
-        data = encrypted_hash
-        data[:first_name] = data[:name].split("/").last
-        data[:last_name] = data[:name].split("/").first
-        data[:month], data[:year] = split_date(data[:expiration])
-        data
-      end
-
       private
 
-        #returns month, year
+        def client
+          V2::Client.new({
+            logger: options[:logger],
+            production: options[:production] || false,
+            mock: options[:mock] || false,
+            log_level: options[:log_level]
+          })
+        end
+
+
+        def decode_data(encrypted_hash)
+          data = encrypted_hash
+          data[:first_name] = data[:name].split("/").last
+          data[:last_name] = data[:name].split("/").first
+          data[:month], data[:year] = split_date(data[:expiration])
+          data
+        end
+
+        def mock?
+          options[:mock] == true
+        end
+
+        def mock_response
+          output = {}
+          output[:number] = '4111111111111111'
+          output[:track1] = "%B4111111111111111^STERLING/JOANNE^99121011445?"
+          output[:track2] = ';4111111111111111=20051010000000157?'
+          output[:month] = '05'
+          output[:year] = '20'
+          output[:first_name] = 'JOANNE'
+          output[:last_name] = 'STERLING'
+          output
+        end
+
+
+        # @returns month, year
         def split_date(split)
           if split
             return split.slice(2,2), split.slice(0,2)
