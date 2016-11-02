@@ -57,7 +57,6 @@ describe Magensa::V2::Decrypter do
       decrypter = Magensa::V2::Decrypter.new("username", "password", "cust-code", {mock: true})
       response = decrypter.decrypt(valid_params)
 
-
       response.should eql(good_response_hash)
     end
 
